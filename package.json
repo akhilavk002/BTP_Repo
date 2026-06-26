@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-managepo": "cds watch --open anubhav.ui.managepo/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-managepo": "cds watch --profile hybrid --open anubhav.ui.managepo/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "workspaces": [
@@ -27,39 +27,56 @@
   ],
   "cds": {
     "requires": {
-      "db": {
-        "[development]" :{
+      "[development]": {
+        "db": {
           "kind": "sqlite",
-          "credentials": {"url": "db.sqlite"}
+          "credentials": {
+            "url": "db.sqlite"
+          }
         },
-        "[production]" : {
-          "kind": "hana"
-        }
-      },
-      "auth": {
-        "[development]": {
+        "auth": {
           "kind": "mocked",
           "users": {
             "anubhav": {
               "password": "Welcome1",
-              "roles": [
-                "Viewer"
-              ],
+              "roles": ["Display", "Edit"],
               "attr": {
-                "spiderman": [
-                  "My Bank of London"
-                ]
+                "spiderman": ["My Bank of London"]
               }
             },
             "ananya": {
               "password": "ananya",
-              "roles": [
-                "Editor"
-              ]
+              "roles": ["Edit"]
             }
           }
+        }
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana"
         },
-        "[production]": {
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "anubhav": {
+              "password": "Welcome1",
+              "roles": ["Display", "Edit"],
+              "attr": {
+                "spiderman": ["My Bank of London"]
+              }
+            },
+            "ananya": {
+              "password": "ananya",
+              "roles": ["Edit"]
+            }
+          }
+        }
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": {
           "kind": "xsuaa"
         }
       }
